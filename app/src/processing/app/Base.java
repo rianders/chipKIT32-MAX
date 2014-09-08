@@ -1716,10 +1716,21 @@ static public Map<String, String> getBoardPreferences() {
   static public File getSketchbookLibrariesFolder() {
     return new File(getSketchbookFolder(), "libraries");
   }
-
-
-  static public String getSketchbookLibrariesPath() {
-    return getSketchbookLibrariesFolder().getAbsolutePath();
+  
+  static public File getSketchbookLibrariesFolder() {
+    File libdir = new File(getSketchbookFolder(), "libraries");
+    if (!libdir.exists()) {
+      try {
+        libdir.mkdirs();
+        File readme = new File(libdir, "readme.txt");
+        FileWriter freadme = new FileWriter(readme);
+        freadme.write("For information on installing libraries, see: " +
+                        "http://chipkit.net\n");
+        freadme.close();
+      } catch (Exception e) {
+      }
+    }
+    return libdir;
   }
   
   
